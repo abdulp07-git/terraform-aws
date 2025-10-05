@@ -20,14 +20,14 @@ module "route-table-public" {
 module "route-table-private" {
   source = "./module-aws-pvtrt"
   vpc-id = module.vpc.vpc-id
-  tag = "${local.hub}-public-rt"
+  tag = "${local.hub}-private-rt"
 }
 
 module "subnets" {
   source = "./module-aws-subnet"
   vpc-id = module.vpc.vpc-id
   private-route-id  = module.route-table-private.routeid
-  public-route-id  = module.route-table-private.routeid
+  public-route-id  = module.route-table-public.routeid
   subnet-map = var.vpc-config-map["hub-vpc"].subnets
   tag = "${local.hub}"
 }
